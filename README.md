@@ -4,6 +4,8 @@
 
 * Configurar bases de datos
 * instalar y correr todo en un `virtualenv`
+* deployment correcto con un servidor
+* Correcto manejo de URLs entre distintas apps
 
 ### Pasos que se siguieron para llegar a este punto
 * En la terminal:
@@ -59,6 +61,28 @@ from django.contrib import admin
 from .models import Tarea #importamos el modelo
 
 admin.site.register(Tarea) #lo registramos
+
+```
+
+* en `pendientes/views.py`
+
+```python
+from django.http import HttpResponse
+
+def index(request):
+    saludo = "Hola, Mundo! Esta es la raiz /"
+    return HttpResponse(saludo) #retornamos el saludo
+```
+
+* en `todolist/urls.py`
+
+```python
+from pendientes import views #importamos las vistas de la app/directorio pendientes
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', views.index, name='index'), #Creamos la ruta raiz '' y la enlazamos con nuestra vista index del archivo views.py
+]
 
 ```
 
